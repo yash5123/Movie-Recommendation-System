@@ -13,6 +13,8 @@
 
 *Search for a film. Explore curated recommendations.*
 
+[![Live Demo](https://img.shields.io/badge/%E2%96%B2_LIVE_DEMO-00C7B7?style=for-the-badge&logoColor=white)](https://movie-recommendation-system-7tww.onrender.com/)
+
 </div>
 
 ---
@@ -20,7 +22,7 @@
 ## 🔍 About
 
 > [!IMPORTANT]
-> **Model Training Script**: The full pipeline - data loading, cleaning, genre/tag preprocessing, SVD and TF-IDF training, and evaluation - is available in [`notebook/train_model.py`](notebook/train_model.py).
+> **Model Training Notebook**: The full pipeline - data loading, cleaning, genre/tag preprocessing, SVD and TF-IDF training, and evaluation - is available in [`notebook/train_model.ipynb`](notebook/train_model.ipynb).
 
 This is a movie recommendation system that suggests relevant films based on user ratings and content metadata. It uses a MovieLens dataset containing 9,742 movies, 100,836 ratings, and 3,683 tags.
 
@@ -138,7 +140,7 @@ Movie Recommendation System/
 │   ├── style.css               # Warm Paper theme styling rules
 │   └── script.js               # Tab views, query logic, and display rendering
 ├── notebook/
-│   └── train_model.py          # Data ingestion and model training script
+│   └── train_model.ipynb       # Full training, evaluation, and plot generation notebook
 ├── requirements.txt            # Python dependencies
 ├── .gitignore                  # Git ignore rules
 └── README.md
@@ -233,8 +235,8 @@ cd "Movie-Recommendation-System"
 # 2. Install dependencies
 pip install -r requirements.txt
 
-# 3. (Optional) Train models and generate plots
-python notebook/train_model.py
+# 3. (Optional) Run the training notebook
+# jupyter notebook notebook/train_model.ipynb
 
 # 4. Run the FastAPI development server
 uvicorn app.main:app --host 127.0.0.1 --port 8000
@@ -248,7 +250,7 @@ FastAPI serves both the API endpoints and the static catalog files from one proc
 
 | Setting | Value |
 |---|---|
-| **Build Command** | `pip install -r requirements.txt && python notebook/train_model.py` |
+| **Build Command** | `pip install -r requirements.txt` |
 | **Start Command** | `uvicorn app.main:app --host 0.0.0.0 --port $PORT` |
 | **Runtime** | Python 3.11+ |
 
