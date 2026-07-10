@@ -6,11 +6,6 @@ __pycache__/
 env/
 venv/
 
-model/*.pkl
-model/plots/
-
-data/*.csv
-
 *.egg-info/
 dist/
 build/
