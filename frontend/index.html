@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMatch - Modernist Movie Catalog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/frontend/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+<body>
+    <!-- Top Segmented Navigation Tabs -->
+    <nav class="nav-tabs">
+        <div class="nav-container">
+            <button id="nav-search-btn" class="nav-btn active" type="button">01 / FIND FILM</button>
+            <button id="nav-results-btn" class="nav-btn" type="button" disabled>02 / SUGGESTIONS</button>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <!-- Page 1: Search Console -->
+        <section id="page-search" class="page-view active-page">
+            <header class="header">
+                <h1 class="logo">CINEMATCH</h1>
+                <span class="meta-tag">FILM JOURNAL</span>
+            </header>
+
+            <div class="search-section">
+                <label for="search-input" class="mono-label">Find a Film</label>
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Type movie title..." autocomplete="off" aria-autocomplete="list" aria-controls="autocomplete-list" aria-expanded="false">
+                    <button id="clear-btn" aria-label="Clear search" hidden>RESET</button>
+                    <ul id="autocomplete-list" role="listbox" hidden></ul>
+                </div>
+            </div>
+
+            <!-- Catalog Highlights -->
+            <div class="highlights-section">
+                <div class="highlights-panel">
+                    <h2 class="mono-label">Catalog Highlights</h2>
+                    <ul class="highlights-list">
+                        <li><span class="hl-label">Span</span> <span class="hl-val">1874 - 2018</span></li>
+                        <li><span class="hl-label">Ratings Analyzed</span> <span class="hl-val">100,836</span></li>
+                        <li><span class="hl-label">Core Genres</span> <span class="hl-val">Drama, Comedy, Thriller</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="active-profile" class="selected-movie-section" hidden>
+                <h2 class="mono-label">Selected Film</h2>
+                <div id="source-card" class="index-card"></div>
+            </div>
+
+            <footer class="catalog-telemetry">
+                <div class="telemetry-grid">
+                    <div class="telemetry-item">
+                        <span class="label">Total Movies</span>
+                        <span class="value" id="telemetry-db">9,742</span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span class="label">Method</span>
+                        <span class="value" id="telemetry-engine">Hybrid</span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span class="label">Status</span>
+                        <span class="value" id="telemetry-mode">Idle</span>
+                    </div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- Page 2: Recommendations View -->
+        <section id="page-results" class="page-view">
+            <!-- States -->
+            <div id="empty-state" class="state-view">
+                <div class="state-content">
+                    <span class="state-icon">[+]</span>
+                    <p class="state-text">No movie selected yet</p>
+                    <p class="sub-text">Use the Find Film tab to select a movie first.</p>
+                </div>
+            </div>
+
+            <div id="loading-state" class="state-view" hidden>
+                <div class="state-content">
+                    <span class="state-icon blinking">[LOADING]</span>
+                    <p class="state-text">Searching for similar films...</p>
+                    <p class="sub-text">This will only take a second.</p>
+                </div>
+            </div>
+
+            <div id="error-state" class="state-view error" hidden>
+                <div class="state-content">
+                    <span class="state-icon">[ERROR]</span>
+                    <p id="error-message" class="state-text">Could not fetch recommendations</p>
+                    <button id="error-dismiss" class="btn-mono">DISMISS</button>
+                </div>
+            </div>
+
+            <!-- Recommendation Grid -->
+            <div id="results-content" hidden>
+                <div class="results-header">
+                    <h2 class="section-title">Similar Films</h2>
+                    <span id="method-badge" class="method-badge"></span>
+                </div>
+                <div id="recommendations-grid" class="recs-table"></div>
+            </div>
+        </section>
+    </div>
+    <script src="/frontend/script.js"></script>
+</body>
+</html>
