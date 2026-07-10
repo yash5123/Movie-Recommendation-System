@@ -82,6 +82,8 @@ async def search_movies(
                 genres=r["genres"],
                 year=r["year"],
                 imdb_id=r.get("imdb_id"),
+                avg_rating=r.get("avg_rating", 0),
+                rating_count=r.get("rating_count", 0),
             )
             for r in results
         ],

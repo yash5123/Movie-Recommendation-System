@@ -233,11 +233,19 @@ document.addEventListener('DOMContentLoaded', () => {
             imdbHtml = `<a href="https://www.imdb.com/title/${source.imdb_id}" target="_blank" class="imdb-stamp">IMDb Page</a>`;
         }
 
+        let ratingHtml = '';
+        if (source.rating_count > 0) {
+            ratingHtml = `<span class="rating-badge">${source.avg_rating.toFixed(1)} / 5</span><span class="rating-count">(${source.rating_count.toLocaleString()} ratings)</span>`;
+        }
+
         sourceCard.innerHTML = `
             <div class="source-title">${source.title}</div>
             <div class="source-meta">
                 ${source.genres.split('|').map(g => `<span class="catalog-tag">${g}</span>`).join('')}
                 ${imdbHtml}
+            </div>
+            <div class="source-rating">
+                ${ratingHtml}
             </div>
         `;
         activeProfileBlock.hidden = false;

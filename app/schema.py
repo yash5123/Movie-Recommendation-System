@@ -7,6 +7,8 @@ class MovieResult(BaseModel):
     genres: str = Field(..., description="Pipe-separated genre list")
     year: int | None = Field(None, description="Release year")
     imdb_id: str | None = Field(None, description="IMDB Movie ID")
+    avg_rating: float = Field(0, description="Average user rating (0-5)")
+    rating_count: int = Field(0, description="Total number of user ratings")
 
 
 class SearchResponse(BaseModel):
@@ -21,6 +23,8 @@ class Recommendation(BaseModel):
     genres: str = Field(..., description="Pipe-separated genre list")
     year: int | None = Field(None, description="Release year")
     imdb_id: str | None = Field(None, description="IMDB Movie ID")
+    avg_rating: float = Field(0, description="Average user rating (0-5)")
+    rating_count: int = Field(0, description="Total number of user ratings")
     similarity_score: float = Field(..., description="Cosine similarity (0-1)")
     method: str = Field(..., description="'content-based' or 'collaborative'")
 

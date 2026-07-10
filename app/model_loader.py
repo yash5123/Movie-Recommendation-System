@@ -32,6 +32,8 @@ class RecommenderEngine:
                 "genres": info["genres"],
                 "year": info["year"],
                 "imdb_id": info.get("imdb_id"),
+                "avg_rating": info.get("avg_rating", 0),
+                "rating_count": info.get("rating_count", 0),
             })
 
     def _load_collaborative(self):
@@ -103,6 +105,8 @@ class RecommenderEngine:
                 "genres": source["genres"],
                 "year": source["year"],
                 "imdb_id": source.get("imdb_id"),
+                "avg_rating": source.get("avg_rating", 0),
+                "rating_count": source.get("rating_count", 0),
             },
             "recommendations": recommendations,
             "method": method,
@@ -126,6 +130,8 @@ class RecommenderEngine:
                 "genres": info["genres"],
                 "year": info["year"],
                 "imdb_id": info.get("imdb_id"),
+                "avg_rating": info.get("avg_rating", 0),
+                "rating_count": info.get("rating_count", 0),
                 "similarity_score": round(float(sim_scores[i]), 4),
                 "method": "content-based",
             })
@@ -152,6 +158,8 @@ class RecommenderEngine:
                     "genres": info["genres"],
                     "year": info["year"],
                     "imdb_id": info.get("imdb_id"),
+                    "avg_rating": info.get("avg_rating", 0),
+                    "rating_count": info.get("rating_count", 0),
                     "similarity_score": round(float(sim_scores[i]), 4),
                     "method": "collaborative",
                 })

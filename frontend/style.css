@@ -293,6 +293,29 @@ body {
     color: var(--bg-ash);
 }
 
+.source-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rating-badge {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 4px 10px;
+    letter-spacing: 0.05em;
+}
+
+.rating-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-silver);
+    letter-spacing: 0.03em;
+}
+
 /* Telemetry Details Footer */
 .catalog-telemetry {
     border-top: 1px solid var(--border-thin);
