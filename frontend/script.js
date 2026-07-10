@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const source = data.source_movie;
         const recs = data.recommendations;
 
-        const formattedMethod = data.method === 'collaborative' ? 'User preference' : 'Thematic similarity';
+        const formattedMethod = data.method === 'collaborative' ? 'Collaborative Filtering (User Ratings)' : 'Content-Based Filtering (Genres & Tags)';
         telemetryEngine.textContent = formattedMethod;
         telemetryMode.textContent = 'Ready';
 
