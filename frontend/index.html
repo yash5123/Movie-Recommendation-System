@@ -1,112 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineMatch - Modernist Movie Catalog</title>
+    <title>cinematch // hybrid movie catalog</title>
+
+    <!-- Google Fonts: Playfair Display (Display/Headings), Inter (Body), Space Mono (Mono Labels) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="/frontend/style.css">
     <link rel="icon" href="/frontend/favicon.svg" type="image/svg+xml">
 </head>
+
 <body>
-    <!-- Top Segmented Navigation Tabs -->
-    <nav class="nav-tabs">
-        <div class="nav-container">
-            <button id="nav-search-btn" class="nav-btn active" type="button">01 / FIND FILM</button>
-            <button id="nav-results-btn" class="nav-btn" type="button" disabled>02 / SUGGESTIONS</button>
+
+    <!-- N9 Edge-aligned minimal Nav Archetype -->
+    <nav class="nav-pill" id="main-nav">
+        <div class="nav-brand">
+            <svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+                <rect width="32" height="32" rx="4" fill="var(--color-ink)"/>
+                <rect x="6" y="6" width="14" height="14" fill="none" stroke="var(--color-paper)" stroke-width="2"/>
+                <rect x="12" y="12" width="14" height="14" fill="none" stroke="var(--color-accent)" stroke-width="2"/>
+            </svg>
+            <span>cinematch</span>
+        </div>
+        <div class="nav-status" hidden>
+            <span class="status-indicator"></span>
+            <span id="telemetry-mode" class="status-text">idle</span>
         </div>
     </nav>
 
-    <div class="app-container">
-        <!-- Page 1: Search Console -->
-        <section id="page-search" class="page-view active-page">
-            <header class="header">
-                <h1 class="logo">CINEMATCH</h1>
-                <span class="meta-tag">FILM JOURNAL</span>
+    <!-- Main Content Container: Unified Workbench Layout -->
+    <main class="dashboard-container">
+
+        <!-- Left Panel: Search & Controls -->
+        <aside class="control-panel">
+            <header class="panel-header">
+                <h1 class="logo-title">cinematch</h1>
+                <p class="logo-subtitle">movie recommender</p>
             </header>
 
+            <!-- Search Section with 8-state Input -->
             <div class="search-section">
-                <label for="search-input" class="mono-label">Find a Film</label>
-                <div class="search-container">
-                    <input type="text" id="search-input" placeholder="Type movie title..." autocomplete="off" aria-autocomplete="list" aria-controls="autocomplete-list" aria-expanded="false">
+                <label for="search-input" class="mono-label">01 / search for a movie</label>
+                <div class="search-wrapper">
+                    <input type="text" id="search-input" placeholder="type movie title..." autocomplete="off"
+                        aria-autocomplete="list" aria-controls="autocomplete-list" aria-expanded="false">
                     <button id="clear-btn" aria-label="Clear search" hidden>RESET</button>
+                    <!-- Floating Autocomplete suggestions dropdown -->
                     <ul id="autocomplete-list" role="listbox" hidden></ul>
                 </div>
             </div>
+
+            <!-- Selected Movie Profile Details Card -->
             <div id="active-profile" class="selected-movie-section" hidden>
-                <h2 class="mono-label">Selected Film</h2>
-                <div id="source-card" class="index-card"></div>
+                <span class="mono-label">02 / selected movie details</span>
+                <div id="source-card" class="profile-card">
+                    <!-- Dynamic details loaded here -->
+                </div>
             </div>
 
-            <!-- Catalog Highlights -->
-            <div class="highlights-section">
-                <div class="highlights-panel">
-                    <h2 class="mono-label">Catalog Overview (9,742 Films)</h2>
-                    <ul class="highlights-list">
-                        <li><span class="hl-label">Release Span</span> <span class="hl-val">1874 - 2018</span></li>
-                        <li><span class="hl-label">Total Ratings</span> <span class="hl-val">100,836</span></li>
-                        <li><span class="hl-label">Top Genres</span> <span class="hl-val">Drama, Comedy, Thriller</span></li>
+            <!-- Database Telemetry Grid -->
+            <div class="telemetry-section">
+                <span class="mono-label">03 / collection details</span>
+                <div class="telemetry-card">
+                    <div class="telemetry-row">
+                        <span class="tel-label">total movies</span>
+                        <span class="tel-value">9,742 films</span>
+                    </div>
+                    <div class="telemetry-row">
+                        <span class="tel-label">release years</span>
+                        <span class="tel-value">1874 – 2018</span>
+                    </div>
+                    <div class="telemetry-row">
+                        <span class="tel-label">total ratings</span>
+                        <span class="tel-value">100,836</span>
+                    </div>
+                    <div class="telemetry-row">
+                        <span class="tel-label">recommendation type</span>
+                        <span id="telemetry-engine" class="tel-value">ratings & genre hybrid</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Panel: Recommendations & States -->
+        <section class="results-panel" id="results-panel">
+
+            <!-- Default / Empty State -->
+            <div id="empty-state" class="state-container">
+                <div class="apparatus-container" aria-hidden="true">
+                    <div class="apparatus-circuit">
+                        <div class="node node-center"></div>
+                        <div class="node node-1"></div>
+                        <div class="node node-2"></div>
+                        <div class="node node-3"></div>
+                        <div class="node node-4"></div>
+                        
+                        <svg class="connections-svg">
+                            <line x1="120" y1="120" x2="180" y2="85" stroke="var(--color-border)" stroke-width="1.5" />
+                            <line x1="120" y1="120" x2="90" y2="68" stroke="var(--color-border)" stroke-width="1.5" />
+                            <line x1="120" y1="120" x2="50" y2="160" stroke="var(--color-border)" stroke-width="1.5" />
+                            <line x1="120" y1="120" x2="152" y2="176" stroke="var(--color-border)" stroke-width="1.5" />
+                        </svg>
+                    </div>
+                    
+                    <ul class="callouts">
+                        <li class="callout callout-l1" style="top: 25px; left: -10px;"><span>user ratings</span></li>
+                        <li class="callout callout-r1" style="top: 60px; right: -15px;"><span>9,742 movies</span></li>
+                        <li class="callout callout-l2" style="bottom: 40px; left: -25px;"><span>similar genres</span></li>
+                        <li class="callout callout-r2" style="bottom: 15px; right: -10px;"><span>movie finder</span></li>
                     </ul>
                 </div>
+                <h3 class="state-title">no movie selected</h3>
+                <p class="state-description">search for a movie on the left to see recommendations.</p>
             </div>
 
-            <footer class="catalog-telemetry">
-                <div class="telemetry-grid">
-                    <div class="telemetry-item">
-                        <span class="label">Total Movies</span>
-                        <span class="value" id="telemetry-db">9,742</span>
-                    </div>
-                    <div class="telemetry-item">
-                        <span class="label">Method</span>
-                        <span class="value" id="telemetry-engine">Hybrid (Collaborative / Content-Based)</span>
-                    </div>
-                    <div class="telemetry-item">
-                        <span class="label">Status</span>
-                        <span class="value" id="telemetry-mode">Idle</span>
-                    </div>
+            <!-- Loading State -->
+            <div id="loading-state" class="state-container" hidden>
+                <div class="spinner-container">
+                    <div class="pulse-ring"></div>
                 </div>
-            </footer>
-        </section>
-
-        <!-- Page 2: Recommendations View -->
-        <section id="page-results" class="page-view">
-            <!-- States -->
-            <div id="empty-state" class="state-view">
-                <div class="state-content">
-                    <span class="state-icon">[+]</span>
-                    <p class="state-text">No movie selected yet</p>
-                    <p class="sub-text">Use the Find Film tab to select a movie first.</p>
-                </div>
+                <h3 class="state-title">calculating</h3>
+                <p class="state-description">finding similar movies for you...</p>
             </div>
 
-            <div id="loading-state" class="state-view" hidden>
-                <div class="state-content">
-                    <span class="state-icon blinking">[LOADING]</span>
-                    <p class="state-text">Searching for similar films...</p>
-                    <p class="sub-text">This will only take a second.</p>
+            <!-- Error State -->
+            <div id="error-state" class="state-container error" hidden>
+                <div class="state-graphic error" aria-hidden="true">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path
+                            d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01" />
+                    </svg>
                 </div>
+                <h3 class="state-title">calculation failed</h3>
+                <p id="error-message" class="state-description">could not fetch recommendations from the server.</p>
+                <button id="error-dismiss" class="btn-primary">dismiss</button>
             </div>
 
-            <div id="error-state" class="state-view error" hidden>
-                <div class="state-content">
-                    <span class="state-icon">[ERROR]</span>
-                    <p id="error-message" class="state-text">Could not fetch recommendations</p>
-                    <button id="error-dismiss" class="btn-mono">DISMISS</button>
-                </div>
-            </div>
-
-            <!-- Recommendation Grid -->
+            <!-- Results Content Grid -->
             <div id="results-content" hidden>
-                <div class="results-header">
-                    <h2 class="section-title">Similar Films</h2>
+                <header class="results-header">
+                    <h2 class="results-title">recommended movies</h2>
                     <span id="method-badge" class="method-badge"></span>
+                </header>
+
+                <!-- Dynamic recommendations list grid -->
+                <div id="recommendations-grid" class="recs-list">
+                    <!-- Recommendation rows injected here -->
                 </div>
-                <div id="recommendations-grid" class="recs-table"></div>
             </div>
         </section>
-    </div>
+        <footer class="app-footer">
+            <p>find your next watch through community ratings and genre similarity</p>
+        </footer>
+    </main>
+
     <script src="/frontend/script.js"></script>
 </body>
+
 </html>

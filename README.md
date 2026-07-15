@@ -11,7 +11,7 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 
-*Search for a film. Explore curated recommendations.*
+*Find your next watch through community ratings and genre similarity.*
 
 [![Live Demo](https://img.shields.io/badge/%E2%96%B2_LIVE_DEMO-00C7B7?style=for-the-badge&logoColor=white)](https://movie-recommendation-system-7tww.onrender.com/)
 
@@ -28,7 +28,7 @@ This is a movie recommendation system that suggests relevant films based on user
 
 The system uses a hybrid recommendation model. If a queried movie has 20 or more user ratings, it uses a collaborative filtering engine powered by TruncatedSVD (50 components) trained on user-mean-centered ratings. If the movie has fewer than 20 ratings, it falls back to a content-based recommendation engine powered by a TF-IDF vectorizer and on-demand cosine similarity computed over movie genres and user-contributed tags.
 
-The user interface uses a segmented tab navigation centered at the top, allowing the user to toggle between `01 / FIND FILM` and `02 / SUGGESTIONS`. When a film is searched and selected, the dashboard displays its metadata (genres, year, and direct IMDb link) and fetches suggestions. Rather than automatically redirecting the user, the suggestions tab enables in place, letting the user switch views manually once they are ready. The UI features a high-contrast editorial look with a warm ivory paper background (`#fcfbf9`), deep ink text (`#1a1917`), and rust-red accents (`#d93829`).
+The user interface is a single-page workbench dashboard with a two-column layout. The left panel contains the search input with autocomplete, selected movie details, and collection statistics. The right panel displays recommendations in a scrollable list with match percentages, or an empty state with a visual node diagram when no movie is selected. The UI uses a warm bone-paper light theme with Playfair Display serif headings, Inter body text, and Space Mono for labels and stats.
 
 > [!NOTE]
 > The collaborative filtering engine achieves a **0.9320 Test RMSE** (Root Mean Squared Error) and a **0.7188 Test MAE** (Mean Absolute Error) on a random 80/20 train-test split of the ratings dataset.
@@ -52,15 +52,17 @@ The user interface uses a segmented tab navigation centered at the top, allowing
 
 ### UI and Experience
 
-- **Two-Page Layout** - Tabbed architecture separates search interactions from recommendation tables. Segmented buttons toggle smoothly without full-page reloads.
+- **Single-Page Workbench** - Two-column dashboard keeps search controls on the left and recommendations on the right, all within a single viewport.
 
-- **Manual Toggle Control** - Selecting a movie updates search-page details and pre-fetches recommendations, but leaves the user in control of when to switch tabs.
+- **Scrollable Recommendations** - On desktop, the left panel and right recommendation list scroll independently while the overall page stays locked to the viewport height.
 
-- **Warm Paper Theme** - Clean layout inspired by editorial catalogs. Features serif titles (DM Serif Display) paired with monospaced metadata columns (Space Mono).
+- **Search with Autocomplete** - Type-ahead search with keyboard navigation (arrow keys, enter, escape) and debounced API calls.
 
-- **Catalog Highlights Panel** - Displays metadata context (date span, ratings count, and core genres) directly on the landing page to fill empty workspace and guide the user.
+- **Visual Empty State** - A CSS-only node diagram with labeled connections fills the right panel when no movie is selected.
 
-- **Responsive Design** - Cards stack cleanly and search containers expand to fit mobile viewports automatically.
+- **Warm Paper Light Theme** - Clean editorial layout using Playfair Display serif headings, Inter body text, and Space Mono monospaced labels on a warm bone-paper background.
+
+- **Responsive Design** - The layout stacks to a single column on mobile and locks to a fixed two-column grid on screens wider than 900px.
 
 ### Backend and API
 
@@ -82,8 +84,8 @@ The user interface uses a segmented tab navigation centered at the top, allowing
 | ![Uvicorn](https://img.shields.io/badge/Uvicorn-2D6A4F?style=for-the-badge) | ASGI web server running the FastAPI application |
 | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white) | Parses, merges, and prepares MovieLens datasets (`movies`, `ratings`, `tags`, `links`) |
 | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) | Document structure and accessibility mappings |
-| ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) | Brutalist styling using CSS custom properties |
-| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) | Tab control, search autocomplete, and asynchronous API integration |
+| ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) | Editorial light-mode theme using CSS custom properties and oklch colors |
+| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) | Search autocomplete, keyboard navigation, and asynchronous API integration |
 
 ---
 
@@ -159,9 +161,10 @@ Movie Recommendation System/
 │       ├── genre_distribution.png
 │       └── year_distribution.png
 ├── frontend/
-│   ├── index.html              # Search and recommendations markup
-│   ├── style.css               # Warm Paper theme styling rules
-│   └── script.js               # Tab views, query logic, and display rendering
+│   ├── index.html              # Single-page workbench dashboard markup
+│   ├── style.css               # Light-mode editorial theme (oklch colors)
+│   ├── script.js               # Search autocomplete and recommendation rendering
+│   └── favicon.svg             # Brand icon (overlapping squares)
 ├── notebook/
 │   └── train_model.ipynb       # Full training, evaluation, and plot generation notebook
 ├── requirements.txt            # Python dependencies
@@ -265,11 +268,11 @@ pip install -r requirements.txt
 uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
-Once running, navigate to `http://127.0.0.1:8000` to access the search catalog.
+Once running, navigate to `http://127.0.0.1:8000` to access the dashboard.
 
 ### 🚀 Deployment
 
-FastAPI serves both the API endpoints and the static catalog files from one process.
+FastAPI serves both the API endpoints and the static frontend files from one process.
 
 | Setting | Value |
 |---|---|
